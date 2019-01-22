@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.emhatay.tara_hub">
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <application android:theme="@style/AppTheme" android:supportsRtl="true" android:roundIcon="@mipmap/ic_launcher_round" android:label="@string/app_name" android:icon="@mipmap/ic_launcher" android:allowBackup="true">
+    <activity android:name=".MainActivity">
+    <intent-filter>
+    <action android:name="android.intent.action.MAIN"/>
+    <category android:name="android.intent.category.LAUNCHER"/>
+</intent-filter>
+
+</activity>
+    <activity android:name=".SecondActivity">
+        <intent-filter>
+    <action android:name="com.emrehatay.passingdata.SecondActivity"/>
+    <category android:name="android.intent.category.DEFAULT"/>
+        </intent-filter>
+</activity>
+</application>
+</manifest>
