@@ -105,6 +105,10 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if(!CheckBluetoothSupport()) {
+            PrintToast("Bluetooth not supported on this device!");
+            return;
+        }
         IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         registerReceiver(mReceiver, filter);
         bluetooth_switch = findViewById(R.id.bluetooth_switch);
@@ -112,6 +116,10 @@ public class MainActivity extends Activity {
         bluetooth_switch.setChecked(mBluetoothAdapter.isEnabled());
         listView = findViewById(R.id.linear_layout);
         RefreshDeviceList(listView);
+    }
+    public boolean CheckBluetoothSupport()
+    {
+        return mBluetoothAdapter != null;
     }
     private CompoundButton.OnCheckedChangeListener switchListener = new CompoundButton.OnCheckedChangeListener() {
         @Override

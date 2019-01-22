@@ -5,38 +5,51 @@
     android:id="@+id/linear_layout_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/cardview_dark_background"
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
 
+    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.emhatay.tara_hub.MainActivity">
 
-    <Switch
-        android:id="@+id/bluetooth_switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Bluetooth"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/linear_layout"
-        android:layout_width="311dp"
-        android:layout_height="427dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="576dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="72dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:orientation="vertical"
+        android:background="@color/ic_launcher_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bluetooth_switch"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/bluetooth_switch">
+
+        <LinearLayout
+            android:id="@+id/linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/ic_launcher_background"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <Switch
+        android:id="@+id/bluetooth_switch"
+        android:layout_width="136dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:switchTextAppearance="@style/TextAppearance.AppCompat"
+        android:text="Bluetooth"
+        android:textColor="@color/cardview_light_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022" />
 
 </android.support.constraint.ConstraintLayout>

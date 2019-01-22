@@ -24,9 +24,11 @@
             android:layout_marginTop="44dp"
             android:layout_marginEnd="98dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/joystick_background"
-            custom:JV_buttonImage="@drawable/pink_ball"
-            custom:JV_fixedCenter="false"
+            custom:JV_backgroundColor="@color/ic_launcher_background"
+            custom:JV_borderColor="@android:color/background_dark"
+            custom:JV_borderWidth="2dp"
+            custom:JV_buttonImage="@android:color/background_dark"
+            custom:JV_buttonStickToBorder="true"
             custom:layout_constraintEnd_toEndOf="parent"
             custom:layout_constraintHorizontal_bias="0.497"
             custom:layout_constraintStart_toStartOf="parent" />
@@ -59,6 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@color/cardview_dark_background"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_view"></android.support.design.widget.NavigationView>
 

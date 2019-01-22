@@ -40,8 +40,8 @@ import android.widget.TextView;
 public class SecondActivity extends AppCompatActivity {
     private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     public String DEVICE_ADDRESS, DEVICE_NAME;
-
     private BluetoothAdapter mBtAdapter;
+
     static class IncomingHandler extends Handler {
         StringBuilder recDataString = new StringBuilder();
         public void handleMessage(android.os.Message msg)
@@ -49,7 +49,6 @@ public class SecondActivity extends AppCompatActivity {
             if (msg.what == handlerState) {
                 String readMessage = (String) msg.obj;
                 recDataString.append(readMessage);
-
                 int endOfLineIndex = recDataString.indexOf("\r\n");
                 if (endOfLineIndex > 0) {
                     String dataInPrint = recDataString.substring(0, endOfLineIndex);
@@ -82,8 +81,10 @@ public class SecondActivity extends AppCompatActivity {
         {
             if(type == MESSAGE_TYPE.RECEIVED)
                 return Color.GREEN;
-            else if(type == MESSAGE_TYPE.SENT)
+            else if(type == MESSAGE_TYPE.INFO)
                 return Color.WHITE;
+            else if(type == MESSAGE_TYPE.SENT)
+                return Color.BLUE;
             else if(type == MESSAGE_TYPE.ERROR)
                 return Color.RED;
             else if(type == MESSAGE_TYPE.WARNING)
@@ -91,8 +92,9 @@ public class SecondActivity extends AppCompatActivity {
             else
                 return Color.GRAY;
         }
-        enum MESSAGE_TYPE
+        public enum MESSAGE_TYPE
         {
+            INFO,
             RECEIVED,
             SENT,
             WARNING,
@@ -122,7 +124,7 @@ public class SecondActivity extends AppCompatActivity {
         dl.addDrawerListener(t);
         t.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        messageListController.AddMessage("Connected to: " + DEVICE_NAME, MessageListController.MESSAGE_TYPE.WARNING);
+        messageListController.AddMessage("Connected to: " + DEVICE_NAME, MessageListController.MESSAGE_TYPE.INFO);
         nv = findViewById(R.id.nv);
         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
         thisDevice = mBtAdapter.getRemoteDevice(DEVICE_ADDRESS);
