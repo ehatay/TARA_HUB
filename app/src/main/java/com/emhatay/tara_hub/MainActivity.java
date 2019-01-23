@@ -2,6 +2,7 @@ package com.emhatay.tara_hub;
 import android.bluetooth.BluetoothProfile;
 import android.content.Intent;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -67,7 +68,13 @@ public class MainActivity extends Activity {
     }
     private void CreateDeviceButton(View view, final BluetoothDevice device)
     {
+        int paddingDp = 25;
+        float density = getResources().getDisplayMetrics().density;
+        int paddingPixel = (int)(paddingDp * density);
+
         Button deviceButton = new Button(view.getContext());
+        deviceButton.setPadding(paddingPixel,paddingPixel,paddingPixel,paddingPixel);
+        deviceButton.setTextColor(getResources().getColor(R.color.colorPrimary, getTheme()));
         deviceButton.setText(device.getName() + " : " + device.getAddress());
         deviceButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +90,7 @@ public class MainActivity extends Activity {
     {
         PrintToast("Attempting to connect to : " + device.getName());
         Intent i = new
-                Intent("com.emrehatay.passingdata.SecondActivity");
+                Intent("com.emhatay.tara_hub.SecondActivity");
         i.putExtra("name", device.getName());
         Bundle extras = new Bundle();
         extras.putString("address", device.getAddress());
@@ -95,6 +102,7 @@ public class MainActivity extends Activity {
     protected void onRestart()
     {
         super.onRestart();
+        if(!CheckBluetoothSupport()) return;
         bluetooth_switch.setChecked(mBluetoothAdapter.isEnabled());
         RefreshDeviceList(listView);
     }
@@ -146,6 +154,7 @@ public class MainActivity extends Activity {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if(!CheckBluetoothSupport()) return;
         unregisterReceiver(mReceiver);
     }
 

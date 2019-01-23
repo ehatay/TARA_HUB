@@ -2,9 +2,11 @@ package com.emhatay.tara_hub;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import io.github.controlwear.virtual.joystick.android.JoystickView;
@@ -17,8 +19,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -109,14 +113,16 @@ public class SecondActivity extends AppCompatActivity {
     private ConnectedThread mConnectedThread;
     static final int handlerState = 0;                        //used to identify handler message
     private BluetoothSocket btSocket = null;
-    Button button;
     private DrawerLayout dl;
     private ActionBarDrawerToggle t;
+    private TextView joystickText;
     private NavigationView nv;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
+        joystickText = findViewById(R.id.JoyStickText);
+        joystickText.setText("Ang:\t0\nLin:\t0");
         DEVICE_NAME = getIntent().getStringExtra("name");
         DEVICE_ADDRESS = getIntent().getExtras().getString("address");        dl = findViewById(R.id.drawer_layout);
         messageListController = new MessageListController(findViewById(R.id.MessageList),(ScrollView) findViewById(R.id.message_view));
@@ -134,6 +140,7 @@ public class SecondActivity extends AppCompatActivity {
         joystickLeft.setOnMoveListener(new JoystickView.OnMoveListener() {
             @Override
             public void onMove(int angle, int strength) {
+                joystickText.setText("Ang:\t" + angle + "\nLin:\t" + strength);
                 mConnectedThread.write( angle + "~" + strength + "\r\n");
             }
         });
@@ -141,13 +148,21 @@ public class SecondActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
+                dl.closeDrawers();
                 switch(id)
                 {
                     case R.id.clear:
-                        mConnectedThread.write("clear\r\n");
+                        PrintToast("Console cleared");
+                        messageListController.message_list.removeAllViews();
                         break;
                     case R.id.request_ip:
                         mConnectedThread.write("request_ip\r\n");
+                        break;
+                    case R.id.send_cmd:
+                        PopupBluetoothSend();
+                        break;
+                    case R.id.connection_status:
+                        ConnectionAcknowledgement();
                         break;
                     case R.id.disconnect:
                         PrintToast("Disconnecting from " + thisDevice.getName());
@@ -165,7 +180,14 @@ public class SecondActivity extends AppCompatActivity {
                 return false;
             }
         });
+        ConnectionAcknowledgement();
     }
+
+    public void ConnectionAcknowledgement()
+    {
+        mConnectedThread.write("ack\r\n");
+    }
+
     public void ExitActivity()
     {
         try {
@@ -175,6 +197,41 @@ public class SecondActivity extends AppCompatActivity {
         {
             //insert code to deal with this
         }
+    }
+
+
+    public void PopupBluetoothSend()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogStyle);
+        builder.setTitle("Input command..");
+        /* Set up the input */
+        final EditText input = new EditText(this);
+        input.setTextColor(Color.BLACK);
+        input.setHintTextColor(Color.BLACK);
+
+// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT); // | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        builder.setView(input);
+
+// Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String msg = input.getText().toString();
+                if(msg.length() == 0) return;
+                messageListController.AddMessage(msg, MessageListController.MESSAGE_TYPE.SENT);
+                mConnectedThread.write(msg + "\r\n");
+                PrintToast("Command: " + msg + " sent");
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
     }
     private void ConnectToDevice(BluetoothDevice device)
     {

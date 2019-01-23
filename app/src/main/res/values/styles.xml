@@ -3,11 +3,17 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/cardview_dark_background</item>
         <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
         <item name="colorPrimaryDark">@color/ic_launcher_background</item>
-
+        <item name="android:textColorPrimary">@color/cardview_light_background</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AlertDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:colorAccent">#f3f3f3</item>
+        <item name="android:textColor">@color/ic_launcher_background</item>
+        <item name="android:textColorPrimary">@color/ic_launcher_background</item>
     </style>
 
 </resources>

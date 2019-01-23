@@ -13,7 +13,7 @@
         </activity>
             <activity android:name=".SecondActivity">
                 <intent-filter>
-                    <action android:name="com.emrehatay.passingdata.SecondActivity"/>
+                    <action android:name="com.emhatay.tara_hub.SecondActivity"/>
                     <category android:name="android.intent.category.DEFAULT"/>
                 </intent-filter>
         </activity>

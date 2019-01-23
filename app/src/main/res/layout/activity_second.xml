@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.emhatay.passingdata.SecondActivity">
+    tools:context="com.emhatay.tara_hub.SecondActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,11 +24,11 @@
             android:layout_marginTop="44dp"
             android:layout_marginEnd="98dp"
             android:layout_marginBottom="16dp"
+            custom:JV_fixedCenter="true"
             custom:JV_backgroundColor="@color/ic_launcher_background"
             custom:JV_borderColor="@android:color/background_dark"
             custom:JV_borderWidth="2dp"
             custom:JV_buttonImage="@android:color/background_dark"
-            custom:JV_buttonStickToBorder="true"
             custom:layout_constraintEnd_toEndOf="parent"
             custom:layout_constraintHorizontal_bias="0.497"
             custom:layout_constraintStart_toStartOf="parent" />
@@ -53,6 +53,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
         </ScrollView>
+
+        <TextView
+            android:id="@+id/JoyStickText"
+            android:layout_width="91dp"
+            android:layout_height="54dp"
+            android:layout_alignStart="@+id/joystickView_left"
+            android:layout_alignBottom="@+id/joystickView_left"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="-70dp"
+            android:layout_marginTop="72dp"
+            android:layout_marginBottom="128dp"
+            android:textColor="@color/cardview_light_background" />
 
     </RelativeLayout>
 
